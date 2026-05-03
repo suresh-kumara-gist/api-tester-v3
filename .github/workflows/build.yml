@@ -1,13 +1,9 @@
 name: Build Electron App for macOS
 
 on:
+  workflow_dispatch:
   push:
     branches: [ main ]
-    tags:
-      - 'v*'
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:
 
 jobs:
   build-mac:
@@ -21,27 +17,69 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-        cache: 'npm'
     
-    # - name: Install dependencies
-    #   run: npm ci
-
+    - name: Generate package-lock.json
+      run: npm init -y && npm install --package-lock-only
+    
     - name: Install dependencies
-      run: npm install  # Changed from npm ci to npm install
-
+      run: npm ci
+    
     - name: Build Vite app
       run: npm run build
     
     - name: Build Electron app for macOS
       run: npm run dist:mac -- --publish=never
-      # The --publish=never flag prevents electron-builder from trying to publish
-
+    
     - name: Upload DMG artifact
       uses: actions/upload-artifact@v4
       with:
         name: api-tester-macos-dmg
         path: release/*.dmg
-        if-no-files-found: error
+
+# name: Build Electron App for macOS
+
+# on:
+#   push:
+#     branches: [ main ]
+#     tags:
+#       - 'v*'
+#   pull_request:
+#     branches: [ main ]
+#   workflow_dispatch:
+
+# jobs:
+#   build-mac:
+#     runs-on: macos-latest
+    
+#     steps:
+#     - name: Checkout code
+#       uses: actions/checkout@v4
+    
+#     - name: Setup Node.js
+#       uses: actions/setup-node@v4
+#       with:
+#         node-version: '18'
+#         cache: 'npm'
+    
+#     # - name: Install dependencies
+#     #   run: npm ci
+
+#     - name: Install dependencies
+#       run: npm install  # Changed from npm ci to npm install
+
+#     - name: Build Vite app
+#       run: npm run build
+    
+#     - name: Build Electron app for macOS
+#       run: npm run dist:mac -- --publish=never
+#       # The --publish=never flag prevents electron-builder from trying to publish
+
+#     - name: Upload DMG artifact
+#       uses: actions/upload-artifact@v4
+#       with:
+#         name: api-tester-macos-dmg
+#         path: release/*.dmg
+#         if-no-files-found: error
 
 
 
