@@ -27,25 +27,21 @@ jobs:
     - name: Build Vite app
       run: npm run build
     
-    - name: Build Electron app for macOS
-      run: npm run dist:mac -- --publish=never
+    - name: Build Electron app for macOS (Intel)
+      run: npm run dist:mac -- --publish=never --x64
     
     - name: Upload DMG artifact
       uses: actions/upload-artifact@v4
       with:
-        name: api-tester-macos-dmg
+        name: api-tester-macos-intel
         path: release/*.dmg
 
 # name: Build Electron App for macOS
 
 # on:
+#   workflow_dispatch:
 #   push:
 #     branches: [ main ]
-#     tags:
-#       - 'v*'
-#   pull_request:
-#     branches: [ main ]
-#   workflow_dispatch:
 
 # jobs:
 #   build-mac:
@@ -59,101 +55,9 @@ jobs:
 #       uses: actions/setup-node@v4
 #       with:
 #         node-version: '18'
-#         cache: 'npm'
     
-#     # - name: Install dependencies
-#     #   run: npm ci
-
-#     - name: Install dependencies
-#       run: npm install  # Changed from npm ci to npm install
-
-#     - name: Build Vite app
-#       run: npm run build
-    
-#     - name: Build Electron app for macOS
-#       run: npm run dist:mac -- --publish=never
-#       # The --publish=never flag prevents electron-builder from trying to publish
-
-#     - name: Upload DMG artifact
-#       uses: actions/upload-artifact@v4
-#       with:
-#         name: api-tester-macos-dmg
-#         path: release/*.dmg
-#         if-no-files-found: error
-
-
-
-# name: Build Electron App for macOS
-
-# on:
-#   push:
-#     branches: [ main ]
-#     tags:
-#       - 'v*'
-#   pull_request:
-#     branches: [ main ]
-#   workflow_dispatch:
-
-# jobs:
-#   build-mac:
-#     runs-on: macos-latest
-    
-#     steps:
-#     - name: Checkout code
-#       uses: actions/checkout@v4
-    
-#     - name: Setup Node.js
-#       uses: actions/setup-node@v4
-#       with:
-#         node-version: '18'
-#         # Remove the cache line or change to: cache: 'npm' (still works with npm install)
-    
-#     - name: Install dependencies
-#       run: npm install  # Changed from npm ci to npm install
-    
-#     - name: Build Vite app
-#       run: npm run build
-    
-#     - name: Build Electron app for macOS
-#       run: npm run dist:mac
-
-#     - name: Upload DMG artifact
-#       uses: actions/upload-artifact@v4
-#       with:
-#         name: api-tester-macos-dmg
-#         path: release/*.dmg
-#         if-no-files-found: error
-
-
-
-
-
-
-
-# name: Build Electron App for macOS
-
-# on:
-#   push:
-#     branches: [ main ]
-#     tags:
-#       - 'v*'
-#   pull_request:
-#     branches: [ main ]
-#   workflow_dispatch:
-
-# jobs:
-#   build-mac:
-#     runs-on: macos-latest
-    
-#     steps:
-#     - name: Checkout code
-#       uses: actions/checkout@v4
-    
-#     - name: Setup Node.js
-#       uses: actions/setup-node@v4
-#       with:
-#         node-version: '18'
-#         cache: 'npm'
+#     - name: Generate package-lock.json
+#       run: npm init -y && npm install --package-lock-only
     
 #     - name: Install dependencies
 #       run: npm ci
@@ -162,20 +66,154 @@ jobs:
 #       run: npm run build
     
 #     - name: Build Electron app for macOS
-#       run: npm run dist:mac
+#       run: npm run dist:mac -- --publish=never
     
 #     - name: Upload DMG artifact
 #       uses: actions/upload-artifact@v4
 #       with:
 #         name: api-tester-macos-dmg
 #         path: release/*.dmg
-#         if-no-files-found: error
+
+# # name: Build Electron App for macOS
+
+# # on:
+# #   push:
+# #     branches: [ main ]
+# #     tags:
+# #       - 'v*'
+# #   pull_request:
+# #     branches: [ main ]
+# #   workflow_dispatch:
+
+# # jobs:
+# #   build-mac:
+# #     runs-on: macos-latest
     
-#     - name: Upload release assets (if tag)
-#       if: startsWith(github.ref, 'refs/tags/')
-#       uses: softprops/action-gh-release@v1
-#       with:
-#         files: release/*.dmg
-#         generate_release_notes: true
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+# #     steps:
+# #     - name: Checkout code
+# #       uses: actions/checkout@v4
+    
+# #     - name: Setup Node.js
+# #       uses: actions/setup-node@v4
+# #       with:
+# #         node-version: '18'
+# #         cache: 'npm'
+    
+# #     # - name: Install dependencies
+# #     #   run: npm ci
+
+# #     - name: Install dependencies
+# #       run: npm install  # Changed from npm ci to npm install
+
+# #     - name: Build Vite app
+# #       run: npm run build
+    
+# #     - name: Build Electron app for macOS
+# #       run: npm run dist:mac -- --publish=never
+# #       # The --publish=never flag prevents electron-builder from trying to publish
+
+# #     - name: Upload DMG artifact
+# #       uses: actions/upload-artifact@v4
+# #       with:
+# #         name: api-tester-macos-dmg
+# #         path: release/*.dmg
+# #         if-no-files-found: error
+
+
+
+# # name: Build Electron App for macOS
+
+# # on:
+# #   push:
+# #     branches: [ main ]
+# #     tags:
+# #       - 'v*'
+# #   pull_request:
+# #     branches: [ main ]
+# #   workflow_dispatch:
+
+# # jobs:
+# #   build-mac:
+# #     runs-on: macos-latest
+    
+# #     steps:
+# #     - name: Checkout code
+# #       uses: actions/checkout@v4
+    
+# #     - name: Setup Node.js
+# #       uses: actions/setup-node@v4
+# #       with:
+# #         node-version: '18'
+# #         # Remove the cache line or change to: cache: 'npm' (still works with npm install)
+    
+# #     - name: Install dependencies
+# #       run: npm install  # Changed from npm ci to npm install
+    
+# #     - name: Build Vite app
+# #       run: npm run build
+    
+# #     - name: Build Electron app for macOS
+# #       run: npm run dist:mac
+
+# #     - name: Upload DMG artifact
+# #       uses: actions/upload-artifact@v4
+# #       with:
+# #         name: api-tester-macos-dmg
+# #         path: release/*.dmg
+# #         if-no-files-found: error
+
+
+
+
+
+
+
+# # name: Build Electron App for macOS
+
+# # on:
+# #   push:
+# #     branches: [ main ]
+# #     tags:
+# #       - 'v*'
+# #   pull_request:
+# #     branches: [ main ]
+# #   workflow_dispatch:
+
+# # jobs:
+# #   build-mac:
+# #     runs-on: macos-latest
+    
+# #     steps:
+# #     - name: Checkout code
+# #       uses: actions/checkout@v4
+    
+# #     - name: Setup Node.js
+# #       uses: actions/setup-node@v4
+# #       with:
+# #         node-version: '18'
+# #         cache: 'npm'
+    
+# #     - name: Install dependencies
+# #       run: npm ci
+    
+# #     - name: Build Vite app
+# #       run: npm run build
+    
+# #     - name: Build Electron app for macOS
+# #       run: npm run dist:mac
+    
+# #     - name: Upload DMG artifact
+# #       uses: actions/upload-artifact@v4
+# #       with:
+# #         name: api-tester-macos-dmg
+# #         path: release/*.dmg
+# #         if-no-files-found: error
+    
+# #     - name: Upload release assets (if tag)
+# #       if: startsWith(github.ref, 'refs/tags/')
+# #       uses: softprops/action-gh-release@v1
+# #       with:
+# #         files: release/*.dmg
+# #         generate_release_notes: true
+# #       env:
+# #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
