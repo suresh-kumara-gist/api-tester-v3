@@ -1,0 +1,66 @@
+.tabs-container {
+    background: #2d2d30;
+    border-bottom: 1px solid #3e3e42;
+  }
+  
+  .tabs-header {
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  
+  .tab {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: #2d2d30;
+    border-right: 1px solid #3e3e42;
+    cursor: pointer;
+    min-width: 150px;
+    position: relative;
+  }
+  
+  .tab.active {
+    background: #1e1e1e;
+  }
+  
+  .tab-name-input {
+    background: transparent;
+    border: none;
+    padding: 4px;
+    font-size: 13px;
+    color: #ccc;
+    flex: 1;
+  }
+  
+  .tab-name-input:focus {
+    background: #3c3c3c;
+  }
+  
+  .tab-close {
+    background: none;
+    border: none;
+    color: #ccc;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0 4px;
+    margin-left: 8px;
+  }
+  
+  .tab-close:hover {
+    color: #fff;
+  }
+  
+  .tab-add {
+    background: none;
+    border: none;
+    color: #ccc;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  
+  .tab-add:hover {
+    background: #3c3c3c;
+  }

@@ -1,0 +1,93 @@
+.collections {
+    height: 100%;
+    overflow-y: auto;
+  }
+  
+  .collections-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .collection-item {
+    background: #2d2d30;
+    padding: 12px;
+    border-radius: 4px;
+  }
+  
+  .collection-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .collection-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: #fff;
+  }
+  
+  .collection-delete {
+    background: #c42b1c;
+    border: none;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+  }
+  
+  .collection-delete:hover {
+    background: #e0311c;
+  }
+  
+  .collection-method {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: #3c3c3c;
+    display: inline-block;
+    margin-bottom: 6px;
+  }
+  
+  .collection-method[data-method="GET"] { color: #4ec9b0; }
+  .collection-method[data-method="POST"] { color: #dcdcaa; }
+  .collection-method[data-method="PUT"] { color: #ce9178; }
+  .collection-method[data-method="DELETE"] { color: #f48771; }
+  
+  .collection-url {
+    font-size: 12px;
+    color: #ccc;
+    margin-bottom: 8px;
+    word-break: break-all;
+  }
+  
+  .collection-load {
+    background: #0e639c;
+    border: none;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 3px;
+    font-size: 11px;
+    cursor: pointer;
+  }
+  
+  .collection-load:hover {
+    background: #1177bb;
+  }
+  
+  .collections-empty {
+    text-align: center;
+    color: #6a6a6a;
+    padding: 40px 20px;
+  }
+  
+  .collections-empty p {
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  
+  .collections-empty small {
+    font-size: 12px;
+  }
