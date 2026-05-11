@@ -8,9 +8,20 @@ function RequestBuilder({ onResponse }) {
   const currentTab = tabs.find(tab => tab.id === activeTabId);
   const [savingCollection, setSavingCollection] = useState(false);
   const [collectionName, setCollectionName] = useState('');
+  const [headersText, setHeadersText] = useState('');
+  const [headersError, setHeadersError] = useState('');
   const { saveCurrentToCollection } = useStore();
 
   if (!currentTab) return null;
+
+  // Initialize headers text from current tab
+  React.useEffect(() => {
+    if (currentTab.headers) {
+      setHeadersText(JSON.stringify(currentTab.headers, null, 2));
+    } else {
+      setHeadersText('{\n  "Content-Type": "application/json"\n}');
+    }
+  }, [currentTab.id, currentTab.headers]);
 
   const handleSend = async () => {
     const response = await sendRequest(
@@ -36,12 +47,31 @@ function RequestBuilder({ onResponse }) {
     onResponse(requestData);
   };
 
-  const handleHeadersChange = (headersJson) => {
+  const handleHeadersChange = (text) => {
+    setHeadersText(text);
+    setHeadersError('');
+    
     try {
-      const headers = JSON.parse(headersJson);
+      // Check if empty or whitespace only
+      if (!text.trim()) {
+        updateCurrentTab({ headers: {} });
+        return;
+      }
+      
+      const headers = JSON.parse(text);
       updateCurrentTab({ headers });
     } catch (e) {
-      // Invalid JSON, don't update
+      setHeadersError('Invalid JSON format. Example: {"Content-Type": "application/json"}');
+    }
+  };
+
+  const handleFormatHeaders = () => {
+    try {
+      const formatted = JSON.stringify(currentTab.headers, null, 2);
+      setHeadersText(formatted);
+      setHeadersError('');
+    } catch (e) {
+      setHeadersError('Cannot format invalid JSON');
     }
   };
 
@@ -83,20 +113,32 @@ function RequestBuilder({ onResponse }) {
       <div className="request-section">
         <div className="section-header">
           <h3>Headers (JSON format)</h3>
-          <button 
-            className="save-collection-btn"
-            onClick={() => setSavingCollection(true)}
-          >
-            💾 Save to Collection
-          </button>
+          <div className="header-actions">
+            <button onClick={handleFormatHeaders} className="format-button">
+              🔧 Format
+            </button>
+            <button 
+              className="save-collection-btn"
+              onClick={() => setSavingCollection(true)}
+            >
+              💾 Save to Collection
+            </button>
+          </div>
         </div>
         <textarea
-          value={JSON.stringify(currentTab.headers, null, 2)}
+          value={headersText}
           onChange={(e) => handleHeadersChange(e.target.value)}
-          placeholder='{"Content-Type": "application/json"}'
-          rows={4}
-          className="headers-editor"
+          placeholder='{
+  "Content-Type": "application/json",
+  "X-Custom-Header": "value"
+}'
+          rows={6}
+          className={`headers-editor ${headersError ? 'error' : ''}`}
         />
+        {headersError && <div className="headers-error">{headersError}</div>}
+        <div className="headers-hint">
+          💡 Tip: Use valid JSON format with double quotes
+        </div>
       </div>
 
       <div className="request-section">
@@ -117,7 +159,9 @@ function RequestBuilder({ onResponse }) {
         <textarea
           value={currentTab.body}
           onChange={(e) => updateCurrentTab({ body: e.target.value })}
-          placeholder='{"key": "value"}'
+          placeholder='{
+  "key": "value"
+}'
           rows={8}
           className="body-editor"
         />

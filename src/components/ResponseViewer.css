@@ -1,3 +1,40 @@
+.headers-view {
+  background: #1e1e1e;
+  border-radius: 4px;
+  overflow: auto;
+}
+
+.header-row {
+  display: flex;
+  padding: 8px 12px;
+  border-bottom: 1px solid #3e3e42;
+  font-family: 'Monaco', 'Menlo', monospace;
+  font-size: 12px;
+}
+
+.header-row:hover {
+  background: #2d2d30;
+}
+
+.header-key {
+  font-weight: 600;
+  color: #9cdcfe;
+  min-width: 200px;
+  font-family: monospace;
+}
+
+.header-value {
+  color: #ce9178;
+  word-break: break-all;
+  flex: 1;
+}
+
+.no-headers {
+  padding: 20px;
+  text-align: center;
+  color: #6a6a6a;
+}
+
 .response-viewer {
     flex: 1;
     display: flex;
